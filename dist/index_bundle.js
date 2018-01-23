@@ -7748,7 +7748,7 @@ exports = module.exports = __webpack_require__(29)(false);
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, "body {\r\n    background-color: grey;\r\n}", ""]);
 
 // exports
 
@@ -8319,6 +8319,10 @@ var _react = __webpack_require__(2);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _workers = __webpack_require__(33);
+
+var _workers2 = _interopRequireDefault(_workers);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8330,10 +8334,24 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var App = function (_Component) {
     _inherits(App, _Component);
 
-    function App() {
+    function App(props) {
         _classCallCheck(this, App);
 
-        return _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).apply(this, arguments));
+        var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
+
+        _this.state = {
+            data: [{
+                data: "1",
+                name: "jon"
+            }, {
+                data: "2",
+                name: "jim"
+            }, {
+                data: "3",
+                name: "josh"
+            }]
+        };
+        return _this;
     }
 
     _createClass(App, [{
@@ -8342,7 +8360,10 @@ var App = function (_Component) {
             return _react2.default.createElement(
                 'div',
                 null,
-                'Hello digga'
+                'Hello digga',
+                this.state.data.map(function (worker, index) {
+                    return _react2.default.createElement(_workers2.default, { key: index, worker: worker });
+                })
             );
         }
     }]);
@@ -8351,6 +8372,87 @@ var App = function (_Component) {
 }(_react.Component);
 
 exports.default = App;
+
+/***/ }),
+/* 33 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(2);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Workers = function (_Component) {
+    _inherits(Workers, _Component);
+
+    function Workers(props) {
+        _classCallCheck(this, Workers);
+
+        var _this = _possibleConstructorReturn(this, (Workers.__proto__ || Object.getPrototypeOf(Workers)).call(this, props));
+
+        _this.handleClick = _this.handleClick.bind(_this);
+        _this.state = {
+            receivedState: _this.props.worker
+        };
+        return _this;
+    }
+
+    _createClass(Workers, [{
+        key: "handleClick",
+        value: function handleClick(e) {
+            // let newValue = "JIMMMI"
+            alert(e.target.innerHTML);
+            this.setState({
+                receivedState: {
+                    data: 5,
+                    name: "BARAK"
+                }
+            });
+            // e.target.innerHTML = newValue;
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            console.log(this.state.receivedState);
+            // console.log(this.props.worker)
+            return _react2.default.createElement(
+                "div",
+                null,
+                _react2.default.createElement(
+                    "h1",
+                    null,
+                    "Title",
+                    this.state.receivedState.data
+                ),
+                _react2.default.createElement(
+                    "h2",
+                    { onClick: this.handleClick },
+                    this.state.receivedState.name
+                )
+            );
+        }
+    }]);
+
+    return Workers;
+}(_react.Component);
+
+exports.default = Workers;
 
 /***/ })
 /******/ ]);
